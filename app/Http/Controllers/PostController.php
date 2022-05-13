@@ -36,8 +36,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        dd($title);
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        // $request->session()->flash('status', 'The post created successfully.');
+        // return redirect('/posts');
+        // return redirect()->route('posts.index');
+        return to_route('posts.index')->with('status', 'The post created successfully.');
     }
 
     /**
