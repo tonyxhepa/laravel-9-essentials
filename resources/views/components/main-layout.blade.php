@@ -15,7 +15,7 @@
 <body class="antialiased">
     <div class="max-w-6xl mx-auto mb-8">
         @if (session()->has('status'))
-            <div class="text-green-400 m-2 p-4 bg-green-200">{{ session()->get('status') }}</div>
+            <div class="text-green-800 m-2 p-4 bg-green-200">{{ session()->get('status') }}</div>
         @endif
         <div class="m2 p-2">
             <ul class="flex">

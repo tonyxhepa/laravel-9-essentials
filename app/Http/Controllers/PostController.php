@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -34,16 +35,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        $post = new Post();
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->save();
+        Post::create($request->validated());
 
-        // $request->session()->flash('status', 'The post created successfully.');
-        // return redirect('/posts');
-        // return redirect()->route('posts.index');
         return to_route('posts.index')->with('status', 'The post created successfully.');
     }
 
@@ -64,9 +59,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -76,9 +71,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostStoreRequest $request, Post $post)
     {
-        //
+        $published = 0;
+        if ($request->has('is_published')) {
+            $published = 1;
+        }
+        $post->update($request->validated() + ['is_published' => $published]);
+
+        return to_route('posts.index')->with('status', 'The post updated successfully.');
     }
 
     /**
@@ -87,8 +88,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return back()->with('status', 'The post deleted successfully.');
     }
 }
