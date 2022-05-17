@@ -1,6 +1,8 @@
-<x-main-layout>
+<x-app-layout>
     <x-slot:header>
-        Create new post
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Create new post
+        </h2>
     </x-slot:header>
 
     <div class="max-w-md mx-auto mt-12">
@@ -25,13 +27,9 @@
                 @enderror
             </div>
             <div class="m-2 p-2">
-                <button type="submit" class="bg-indigo-500 m-2 p-2">Create</button>
+                <button type="submit"
+                    class="bg-indigo-500 hover:bg-indigo-700 text-white rounded m-2 p-2">Create</button>
             </div>
         </form>
     </div>
-    <x-slot:footer>
-        <div clas="mt-12">
-            Footer
-        </div>
-    </x-slot:footer>
-</x-main-layout>
+</x-app-layout>

@@ -1,6 +1,8 @@
-<x-main-layout>
+<x-app-layout>
     <x-slot:header>
-        Update the post
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Update the post
+        </h2>
     </x-slot:header>
 
     <div class="max-w-md mx-auto mt-12">
@@ -40,4 +42,4 @@
             Footer
         </div>
     </x-slot:footer>
-</x-main-layout>
+    </x-main-layout>
