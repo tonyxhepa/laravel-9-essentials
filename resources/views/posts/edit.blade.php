@@ -6,7 +6,8 @@
     </x-slot:header>
 
     <div class="max-w-md mx-auto mt-12">
-        <form class="bg-slate-200 m-4 p-4" method="POST" action="{{ route('posts.update', $post->id) }}">
+        <form class="bg-slate-200 m-4 p-4" method="POST" action="{{ route('posts.update', $post->id) }}"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="m-2 p-2">
@@ -15,6 +16,15 @@
             </div>
             <div class="m-2 p-2">
                 @error('title')
+                    <span class="text-red-400 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="m-2 p-2">
+                <label>Image</label>
+                <input type="file" name="image">
+            </div>
+            <div class="m-2 p-2">
+                @error('image')
                     <span class="text-red-400 text-sm">{{ $message }}</span>
                 @enderror
             </div>

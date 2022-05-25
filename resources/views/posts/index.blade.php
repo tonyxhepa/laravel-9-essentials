@@ -19,7 +19,9 @@
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
                                 Title</th>
-
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+                                Image</th>
                             <th scope="col" class="relative px-6 py-3">Edit</th>
                         </tr>
                     </thead>
@@ -28,7 +30,9 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
-
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <img src="{{ asset('/storage/' . $post->image) }}" class="w-16 h-auto">
+                                </td>
                                 <td class="px-6 py-4 text-right text-sm">
                                     <div class="flex space-x-2">
                                         <a href="{{ route('posts.edit', $post->id) }}"
