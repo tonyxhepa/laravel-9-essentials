@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -41,7 +43,10 @@ class PostController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['image'] = $request->file('image')->store('posts');
-        Post::create($validatedData);
+        $post = Post::create($validatedData);
+        if ($request->has('tags')) {
+            $post->tags()->attach($request->tags);
+        }
 
         return to_route('posts.index')->with('status', 'The post created successfully.');
     }
@@ -65,7 +70,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -91,6 +97,8 @@ class PostController extends Controller
             'image' => $post->image
         ]);
 
+        $post->tags()->sync($request->tags);
+
         return to_route('posts.index')->with('status', 'The post updated successfully.');
     }
 
@@ -103,6 +111,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Storage::delete($post->image);
+
         $post->delete();
 
         return back()->with('status', 'The post deleted successfully.');
